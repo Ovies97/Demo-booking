@@ -1,0 +1,94 @@
+﻿@model Demo_Booking_Lessons_For_Driving.Models.EmployeeLogin
+
+@{
+    ViewBag.Title = "Login";
+}
+
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Car HUB", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right ">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Register", "Registration", "Employee")</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card " style="margin-top:150px;margin-left:150px; background-color :white;" >
+    <div class="card-header ">
+        <h1 style="margin-right:300px;">Please enter your credentials</h1>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "please enter email", @class = "form-control ", style = "width:50%;" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { placeholder = "please enter password", @class = "form-control", style = "width:50%;" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="ol-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.RememberMe)
+                            @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Login" class="btn btn-primary " />
+                        </div>
+
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-offset-2 col-md-10">
+                            <label>Login as:</label>
+                            @Html.DropDownListFor(Model => Model.IsAdmin,
+                                                                                new SelectList(ViewBag.Actors), "Select Options", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.IsAdmin , "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    @Html.ActionLink("Register Now", "Registration", "Employee", htmlAttributes: new { style = "margin-left:150px;" })
+                </div>
+                <div>
+                    @Html.ActionLink("Forgot Password?", "ForgotPassword", "Employee", htmlAttributes: new { style = "margin-left:150px;" })
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
+

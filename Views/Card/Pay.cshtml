@@ -1,0 +1,110 @@
+﻿@model Demo_Booking_Lessons_For_Driving.Models.Card
+
+@{
+    ViewBag.Title = "Pay";
+}
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Car Hub", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav  navbar-right ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @HttpContext.Current.User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (Request.IsAuthenticated)
+                        {
+
+                            using (Html.BeginForm("Logout", "Employee", FormMethod.Post))
+                            {
+                                <a href="javascript:document.getElementById('logoutForm').submit()" style="width:100%;color:red;text-align:left; display:block;">Logout</a>
+                            }
+                        }
+
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("Pay", "Card"))
+{
+
+    <!-- For demo purpose -->
+    <div class="row mb-4">
+        <div class="col-lg-8 mx-auto text-center">
+            <h1 class="display-6">Please proceed to enter your card details</h1>
+        </div>
+    </div> <!-- End -->
+    <div class="bg-primary  pt-4 pl-2 pr-2 pb-2">
+        <!-- Credit card form tabs -->
+        <ul role="tablist" class="nav bg-light nav-pills rounded nav-fill mb-3">
+            <li class="nav-item"> <a data-toggle="pill" class="nav-link"> <i class="fas fa-credit-card mr-2"></i> Credit Card </a> </li>
+        </ul>
+    </div> <!-- End -->
+    <h5>Card Owner</h5>
+    @Html.TextBoxFor(m => m.CardOwner, htmlAttributes: new { @class = "form-control" })
+    @Html.ValidationMessageFor(model => model.CardOwner, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label>
+            <h5>RSA ID Number</h5>
+        </label>
+        @Html.TextBoxFor(m => m.IDNumber, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.IDNumber, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>
+            <h5>Card number</h5>
+        </label>
+
+        @Html.TextBoxFor(m => m.CardNumber, htmlAttributes: new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.CardNumber, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label>
+            <span class="hidden-xs">
+                <h6>Expiration Date</h6>
+            </span>
+        </label>
+        <br />
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="form-group">
+
+                    @Html.EditorFor(model => model.ExpireDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExpireDate, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>
+            <h6>CVV </h6>
+        </label>
+        @Html.TextBoxFor(m => m.CVV, htmlAttributes: new { @class = "form-control", @minlength = "3", @maxlength = "3" })
+        @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
+    </div>
+    <div class="card-footer">
+        <input type="submit" class="btn btn-primary btn-block shadow-sm" value="Confirm Payment">
+    </div>
+    if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>Error!</strong>@ViewBag.Message
+        </div>
+    }
+}

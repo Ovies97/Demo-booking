@@ -1,0 +1,149 @@
+﻿@model IEnumerable<Demo_Booking_Lessons_For_Driving.Models.Learner>
+@{
+    ViewBag.Title = "ViewBookings";
+}
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Car Hub", "ViewBookings", "Learner", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav  navbar-right ">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @HttpContext.Current.User.Identity.Name
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        @if (Request.IsAuthenticated)
+                        {
+
+                            using (Html.BeginForm("Logout", "Employee", FormMethod.Post))
+                            {
+                                <a href="javascript:document.getElementById('logoutForm').submit()" style="width:100%;color:red;text-align:left; display:block;">Logout</a>
+                            }
+                        }
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+
+        <ul class="list-unstyled components">
+
+            <li class="active">
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                    <li>@Html.ActionLink("Logout", "Index", "Home")</li>
+
+                    <li>
+                        <a href="#">Home 2</a>
+                    </li>
+                    <li>
+                        <a href="#">Home 3</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">View Data</a>
+                <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <li>
+                        @Html.ActionLink("View Bookings", "ViewBookings", "Learner")
+                    </li>
+                    <li>
+                        @Html.ActionLink("View Instructors", "ViewInstructors", "Employee")
+                    </li>
+                    <li>
+                        @Html.ActionLink("View Employees", "ViewEmployees", "Employee")
+                    </li>
+                </ul>
+            </li>
+            <li>
+                @Html.ActionLink("Book", "Book", "Learner")
+            </li>
+            <li>
+                <a href="#">Contact</a>
+            </li>
+        </ul>
+
+    </nav>
+
+</div>
+<div class="form-horizontal">
+    <div class="container-fluid " style="margin-top:30px;">
+        <h1>View Bookings</h1>
+    </div>
+    <a href="@Url.Action("Book","Learner")" type="button" class="btn btn-primary">Add</a>
+</div>
+
+@using (Html.BeginForm())
+{
+    //if (ViewBag.Learners.Count > 0)
+    //{
+        <table class="table table-dark" style="margin-right:250px;">
+            <thead style="border :thick ; background-color:black ;">
+                <tr>
+
+                    <th scope="col" style="color:white;">Name</th>
+                    <th scope="col" style="color:white;">Surname</th>
+                    <th scope="col" style="color:white;">Email</th>
+                    <th scope="col" style="color:white;">Date</th>
+                    <th scope="col" style="color:white;">Category</th>
+                    <th scope="col" style="color:white;">Description</th>
+                    <th scope="col" style="color:white;">Testing Center</th>
+                    <th scope="col" style="color:white;">Province</th>
+                    <th scope="col" style="color:white;">Cell Number</th>
+                    <th scope="col" style="color:white;">Status</th>
+                    <th scope="col" style="color:white;">Action</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.Learners)
+                {
+                    <tr>
+                        <td style="color:black ;"> @item.Name</td>
+                        <td style="color:black ;"> @item.Surname</td>
+                        <td style="color:black ;"> @item.Email</td>
+                        <td style="color:black ;">  @item.Date</td>
+                        <td style="color:black ;">  @item.Category</td>
+                        <td style="color:black ;">  @item.Description</td>
+                        <td style="color:black ;">  @item.TestingCenter</td>
+                        <td style="color:black ;">  @item.Province</td>
+                        <td style="color:black ;">  @item.CellNumber</td>
+                        <td style="color:black ;">  @item.Status</td>
+                        <td><a href="@Url.Action("EditBooking","Cart",new {id = item.IDNumber })" type="button" class="btn btn-success ">Edit</a></td>
+                        <td><a href="@Url.Action("DeleteBooking","Cart",new {id = item.IDNumber })" type="button" class="btn btn-danger "><i class="bi bi-person-x"></i></a></td>
+                        
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        @*if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+        {
+            <div class="alert alert-danger    ">
+                <strong>Oops Something went wrong !</strong>@ViewBag.Message
+            </div>
+        }
+    }*@
+    @*else
+    {
+        <h1>No Bookings available!!.</h1>
+    }*@
+
+}
+
